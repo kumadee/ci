@@ -6,6 +6,7 @@ pipeline {
         stage('build') {
             steps {
                 echo "Build branch $BRANCH_NAME"
+                echo "This is second test."
             }
         }
         stage('publish') {
