@@ -12,6 +12,7 @@ pipeline {
         stage('publish') {
             steps {
                 echo "Publish commit - $GIT_COMMIT for branch - $GIT_BRANCH"
+                echo "This is a 3rd test for pipeline."
             }
         }
     }
