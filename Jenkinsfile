@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "Build branch $BRANCH_NAME"
+                echo "Build branch $GIT_BRANCH"
                 echo "This is first test"
             }
         }
