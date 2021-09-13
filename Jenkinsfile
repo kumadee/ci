@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo "Publish commit - $GIT_COMMIT for branch - $GIT_BRANCH"
                 echo "This is a 2nd test for pipeline"
+                echo "finished"
             }
         }
     }
