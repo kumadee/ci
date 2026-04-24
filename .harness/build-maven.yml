@@ -1,0 +1,68 @@
+template:
+  name: maven-build
+  identifier: mavenbuild
+  versionLabel: 0.0.1
+  type: Pipeline
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  spec:
+    properties:
+      ci:
+        codebase:
+          connectorRef: githubcom
+          repoName: <+input>
+          build: <+input>
+    stages:
+      - stage:
+          name: compile
+          identifier: compile
+          description: ""
+          type: CI
+          spec:
+            cloneCodebase: true
+            caching:
+              enabled: true
+              override: true
+              paths: []
+            buildIntelligence:
+              enabled: false
+            platform:
+              os: Linux
+              arch: Amd64
+            runtime:
+              type: Docker
+              spec: {}
+            execution:
+              steps:
+                - step:
+                    type: Run
+                    name: maven compile
+                    identifier: maven_compile
+                    spec:
+                      shell: Sh
+                      command: mvn clean compile
+                    description: compile using maven
+                    when:
+                      stageStatus: All
+                - step:
+                    type: Semgrep
+                    name: Semgrep_1
+                    identifier: Semgrep_1
+                    spec:
+                      target:
+                        detection: auto
+                        type: repository
+                      advanced:
+                        log:
+                          level: info
+                        args: {}
+                      mode: orchestration
+                      config: default
+          timeout: <+stage.variables.timeoutInMinutes>
+          variables:
+            - name: timeoutInMinutes
+              type: String
+              description: Stage timeout in minutes
+              required: true
+              value: 60m
